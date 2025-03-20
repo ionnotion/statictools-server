@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -10,7 +11,15 @@ import (
 )
 
 func ConnectPostgres() (*gorm.DB, error) {
-	dsn := ""
+	dsn := fmt.Sprintf(
+		"host=%s user=%s password=%s dbname=%s port=%s",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_PASS"),
+		os.Getenv("DB_NAME"),
+		os.Getenv("DB_PORT"),
+	)
+
 	opts := gorm.Config{}
 
 	pg, err := gorm.Open(postgres.Open(dsn), &opts)
